@@ -1,7 +1,7 @@
 /*
     This script is the main one, where the main loop resides and everything else is called from.
 */
-
+import * as EventHandler from "./events.js";
 
 //This keeps track of the current time so the main loop knows how much time has passed.
 var loop_time = Date.now();
