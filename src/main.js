@@ -2,6 +2,7 @@
     This script is the main one, where the main loop resides and everything else is called from.
 */
 import * as EventHandler from "./events.js";
+import * as ItemHandler from "./items.js";
 
 //This keeps track of the current time so the main loop knows how much time has passed.
 var loop_time = Date.now();
@@ -9,7 +10,6 @@ var loop_time = Date.now();
 const frames_per_second = 30;
 //Exactly how much time that is in miliseconds, to simplify later calculations.
 const wait_time = 1000/frames_per_second;
-
 
 function main() {
     //Check how much time (delta) has passed since last loop.

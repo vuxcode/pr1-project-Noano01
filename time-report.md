@@ -4,3 +4,7 @@
   - Added the main loop.
   - Added the event queue.
   - Began on item system.
+
+- 2022-11-06 Didn't keep track of the time. Probably a couple of hours at least.
+  -Added a resource loader.
+  -Continued with items.
