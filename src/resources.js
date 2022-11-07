@@ -17,7 +17,7 @@ export function loadResource(path, callback) {
             //Check if file was successfully retrieved
             if (request.status == 200) {
                 console.log("[ResourceLoader] Finished loading file \"" + path + "\"");
-                callback(request.responseText);
+                setTimeout(callback, 0, request.responseText);
             } else {
                 console.log("[ResourceLoader] Failed to load file \"" + path + "\" with code " + request.status);
             }
