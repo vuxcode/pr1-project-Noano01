@@ -4,13 +4,13 @@
 */
 
 //The array that keeps track of unhandled events.
-var event_queue = []
+const event_queue = [];
 
 /**
  * Gets the oldest event, and removes it from the event queue.
  * @return {[String, Any]} An array consisting of the event id and event data.
  */
-export function get_event() {
+export function pull_event() {
     if (event_queue.length > 0) { 
         return event_queue.shift();
     }
@@ -23,4 +23,13 @@ export function get_event() {
  */
 export function has_event() {
     return (event_queue.length > 0);
+}
+
+/**
+ * Adds an event to the event queue.
+ * @param {string} id The id of the event.
+ * @param {Any} data Any data the event contains.
+ */
+export function push_event(id, data) {
+    event_queue.push([id, data]);
 }
