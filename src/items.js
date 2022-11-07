@@ -8,6 +8,8 @@ import * as resourceLoader from "./resources.js";
 const items = [];
 //All the items the player owns. The items are represented by their IDs.
 const inventory = [];
+//The item in inventory that is currently selected;
+var selected = 0;
 
 //The amount of lines a single item uses in the text file.
 const ITEM_WIDTH = 2;
@@ -82,4 +84,23 @@ export function getName(id) {
  */
 export function getDescription(id) {
     return items[id][1];
+}
+
+/**
+ * Get the currently selected item.
+ * @returns The item id.
+ */
+export function getItem() {
+    return inventory[selected];
+}
+
+export function nextItem(clockwise = true) {
+    //Increment (or decrement) the selection "pointer".
+    if (clockwise) {
+        selected++;
+    } else {
+        selected--;
+    }
+    //Make sure it is not out of bounds.
+    selected = selected % inventory.length;
 }
