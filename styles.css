@@ -30,26 +30,16 @@
     margin-bottom: 5px;
     border: 2px solid white;
     padding: 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
 }
 
-@keyframes text-animation {
-    0% {width: 1ch}
-    100% {width: 10ch}
-}
-
-.message_content {
-    display: inline-block;
-    width: 10ch;
+#message_content {
+    margin: auto;
+    width: 100%;
+    height: 100%;
     font-family: monospace;
     font-size: 30;
-    text-overflow: " ";
-    white-space: nowrap;
-    word-break: break-all;
+    word-wrap: normal;
+    word-break: break-word;
     overflow: hidden;
-
-    animation-name: text-animation;
-    animation-duration: 10s;
+    line-height: 117%;
 }
