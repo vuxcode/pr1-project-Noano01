@@ -16,6 +16,19 @@
     width: 100%;
     height: 100%;
     top: 0;
+    display: none;
+}
+
+@keyframes message_box_animation {
+    0% {
+        height: 0px;
+        padding-top: 0px;
+        padding-bottom: 0px;
+    }
+    100% {
+        height: 250px;
+        padding: 10px
+    }
 }
 
 #message_box {
@@ -30,6 +43,10 @@
     margin-bottom: 5px;
     border: 2px solid white;
     padding: 10px;
+
+    animation-name: message_box_animation;
+    animation-duration: 1.5s;
+    animation-timing-function: ease-out;
 }
 
 #message_content {
@@ -44,24 +61,69 @@
     line-height: 117%;
 }
 
-@keyframes message_next_animation {
-    0% {
-        bottom: 15px;
-    }
-    100% {
-        bottom: 10px;
-    }
-}
-
 #message_next {
     position: absolute;
     font-size: 30;
     bottom: 10px;
     right: 10px;
+}
 
-    animation-name: message_next_animation;
-    animation-duration: 1s;
+#message_buttons {
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    bottom: 25px;
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: row;
+    display: none;
+}
+
+.message_buttons {
+    width: 100px;
+    height: 40px;
+    padding-bottom: 5px;
+    border: none;
+    background-color: transparent;
+}
+
+.message_buttons:hover .message_arrow {
+    display: block;
+    background-color: transparent;
+}
+
+.message_button_text {
+    display: inline-block;
+    height: 100%;
+    font-family: monospace;
+    font-size: 40px;
+    text-align: center;
+    line-height: 35px;
+}
+
+@keyframes arrow_spin {
+    0% {
+        transform: scale(1,1);
+    }
+    100% {
+        transform:  scale(1,0.05);
+    }
+}
+
+.arrow_spin {
+    animation-name: arrow_spin;
+    animation-duration: 2s;
     animation-iteration-count: infinite;
-    animation-timing-function: ease-in-out;
     animation-direction: alternate;
+}
+
+.message_arrow {
+    position: relative;
+    top: -34px;
+    left: -34px;
+    height: 34px;
+    width: 34px;
+    font-size: 20px;
+
+    display: none
 }
