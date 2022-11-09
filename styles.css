@@ -43,3 +43,25 @@
     overflow: hidden;
     line-height: 117%;
 }
+
+@keyframes message_next_animation {
+    0% {
+        bottom: 15px;
+    }
+    100% {
+        bottom: 10px;
+    }
+}
+
+#message_next {
+    position: absolute;
+    font-size: 30;
+    bottom: 10px;
+    right: 10px;
+
+    animation-name: message_next_animation;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+    animation-direction: alternate;
+}
