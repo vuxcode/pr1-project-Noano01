@@ -3,6 +3,7 @@
 */
 import * as EventHandler from "./events.js";
 import * as ItemHandler from "./items.js";
+import * as MessageHandler from "./messages.js";
 
 //This keeps track of the current time so the main loop knows how much time has passed.
 var loop_time = Date.now();
