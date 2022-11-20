@@ -1,6 +1,11 @@
 /*
     This script is the main one, where the main loop resides and everything else is called from.
 */
+
+//Remove the module error message if this is running correctly.
+document.getElementById("module_message").remove();
+
+
 import * as EventHandler from "./events.js";
 import * as ItemHandler from "./items.js";
 import * as MessageHandler from "./messages.js";
