@@ -16,3 +16,6 @@
 - 2022-11-23 maybe? Worked for 1 hour 30 minutes.
   - Forgot to add this last lesson.
   - Don't remember what I did.
+
+- 2022-11-30 Worked for 1 hour.
+  - Started on the renderer.
