@@ -146,8 +146,3 @@ function clearMessage() {
     //Hide buttons
     //buttons.style.display = "none";
 }
-
-askBool("HELLO WORLD?", (a) => {
-    console.log(a);
-    exit();
-});
