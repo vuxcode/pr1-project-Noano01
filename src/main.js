@@ -5,7 +5,7 @@
 //Remove the module error message if this is running correctly.
 document.getElementById("module_message").remove();
 
-
+import * as Renderer from "./render.js";
 import * as EventHandler from "./events.js";
 import * as ItemHandler from "./items.js";
 import * as MessageHandler from "./messages.js";
@@ -23,6 +23,11 @@ function main() {
     var delta = loop_time - new_time;
     loop_time = new_time;
 
+    if (Renderer.hasFinished()) {
+        Renderer.prepareRender();
+        Renderer.test();
+    }
+    
     //TODO: the rest of the game.
 
     //Wait before calling the loop again.
@@ -30,5 +35,6 @@ function main() {
     setTimeout(main, wait_time-(Date.now()-loop_time));
 }
 
+Renderer.setupShaders();
 //Start the loop.
 main();
