@@ -15,6 +15,8 @@ const click_gl = click_canvas.getContext("webgl");
 //The shader program
 var program;
 
+var colorLoc;
+
 var vrtxPosLoc;
 var vrtxPosBuffer;
 
@@ -87,6 +89,7 @@ export function setupShaders() {
             //Put togetther the shaders
             program = createProgram(gl, v_shader, f_shader);
             //Get where to put the vertices
+            colorLoc = gl.getUniformLocation(program, "u_color");
             vrtxPosLoc = gl.getAttribLocation(program, "v_position");
             vrtxPosBuffer = gl.createBuffer();
             has_initialized = true;
@@ -125,18 +128,37 @@ export function prepareRender() {
  * @param {*} context 
  * @param {*} buffer
  */
-function render(object, context, buffer) {
+function render(object, context, buffer, wireframe = false) {
     //Bind buffer to write to it. This might be redundant.
     context.bindBuffer(context.ARRAY_BUFFER, buffer);
     //Write vertices to buffer
-    context.bufferData(context.ARRAY_BUFFER, new Float32Array(object), context.STATIC_DRAW);
+    context.bufferData(context.ARRAY_BUFFER, new Float32Array(object), context.DYNAMIC_DRAW);
     //Draw every vertex.
-    context.drawArrays(context.TRIANGLES, 0, object.length/vrtx_size);
+    if (wireframe) {
+        gl.uniform4f(colorLoc,  1, 1, 1, 0); 
+        context.drawArrays(context.LINES, 0, object.length/vrtx_size);
+    } else {
+        gl.uniform4f(colorLoc,  0, 0, 0, 0); 
+        context.drawArrays(context.TRIANGLES, 0, object.length/vrtx_size);
+    }
+}
+
+//This should probably be in the part where objects are loaded, to increase performance
+function triangleToLines(object) {
+    var out = [];
+    for (var i = 0; i < object.length; i+=3*2) {
+        out.push(object[i], object[i+1], object[i+2], object[i+3]);
+        out.push(object[i+2], object[i+3], object[i+4], object[i+5]);
+        out.push(object[i+4], object[i+5], object[i], object[i+1]);
+    }
+    return out;
 }
 
 //TODO: remove
 export function test() {
-    render([0,0,1,0,0,1], gl, vrtxPosBuffer);
+    var test_v = [0,0,1,0,0,1];
+    render(test_v, gl, vrtxPosBuffer);
+    render(triangleToLines(test_v), gl, vrtxPosBuffer, true);
 }
 
 
