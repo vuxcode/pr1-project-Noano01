@@ -19,3 +19,7 @@
 
 - 2022-11-30 Worked for 1 hour.
   - Started on the renderer.
+
+- 2022-12-5 Worked for 1 hour 30 minutes.
+
+- 2022-12-7 Worked for 1 hour 30 minutes.
