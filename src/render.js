@@ -16,6 +16,7 @@ const click_gl = click_canvas.getContext("webgl");
 var program;
 
 var colorLoc;
+var resolutionLoc;
 
 var vrtxPosLoc;
 var vrtxPosBuffer;
@@ -88,9 +89,10 @@ export function setupShaders() {
         compileShader(gl, gl.FRAGMENT_SHADER, "fragment.glsl", (f_shader) => {
             //Put togetther the shaders
             program = createProgram(gl, v_shader, f_shader);
-            //Get where to put the vertices
+            //Get where to put the vertices and stuff
             colorLoc = gl.getUniformLocation(program, "u_color");
-            vrtxPosLoc = gl.getAttribLocation(program, "v_position");
+            resolutionLoc = gl.getUniformLocation(program, "u_resolution");
+            vrtxPosLoc = gl.getAttribLocation(program, "a_position");
             vrtxPosBuffer = gl.createBuffer();
             has_initialized = true;
             console.log("Shader loaded successfully!");
@@ -105,6 +107,8 @@ export function resizeScreen() {
     canvas.width = canvas.clientWidth;
     canvas.height = canvas.clientHeight;
 
+    gl.uniform2f(resolutionLoc, canvas.clientWidth, canvas.clientHeight);
+
     click_canvas.width = canvas.clientWidth;
     click_canvas.height = canvas.clientHeight;
 
@@ -113,9 +117,9 @@ export function resizeScreen() {
 }
 
 export function prepareRender() {
+    gl.useProgram(program);
     resizeScreen();
     clear();
-    gl.useProgram(program);
 
     gl.enableVertexAttribArray(vrtxPosLoc);
     gl.bindBuffer(gl.ARRAY_BUFFER, vrtxPosBuffer);
@@ -146,7 +150,7 @@ function render(object, context, buffer, wireframe = false) {
 //This should probably be in the part where objects are loaded, to increase performance
 function triangleToLines(object) {
     var out = [];
-    for (var i = 0; i < object.length; i+=3*2) {
+    for (var i = 0; i < object.length; i+=3*vrtx_size) { //TODO: Update this when upgrading to 3D
         out.push(object[i], object[i+1], object[i+2], object[i+3]);
         out.push(object[i+2], object[i+3], object[i+4], object[i+5]);
         out.push(object[i+4], object[i+5], object[i], object[i+1]);
@@ -156,7 +160,7 @@ function triangleToLines(object) {
 
 //TODO: remove
 export function test() {
-    var test_v = [0,0,1,0,0,1];
+    var test_v = [0, 0, 500, 0, 0, 500];
     render(test_v, gl, vrtxPosBuffer);
     render(triangleToLines(test_v), gl, vrtxPosBuffer, true);
 }
