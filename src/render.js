@@ -3,6 +3,7 @@
 */
 
 import * as ResourceHandler from "./resources.js";
+import * as MatrixMath from "./matrix.js";
 
 //The canvas where everything is rendered.
 const canvas = document.getElementById("canvas");
@@ -17,6 +18,7 @@ var program;
 
 var colorLoc;
 var resolutionLoc;
+var matrixLoc;
 
 var vrtxPosLoc;
 var vrtxPosBuffer;
@@ -92,6 +94,8 @@ export function setupShaders() {
             //Get where to put the vertices and stuff
             colorLoc = gl.getUniformLocation(program, "u_color");
             resolutionLoc = gl.getUniformLocation(program, "u_resolution");
+            matrixLoc = gl.getUniformLocation(program, "u_matrix");
+
             vrtxPosLoc = gl.getAttribLocation(program, "a_position");
             vrtxPosBuffer = gl.createBuffer();
             has_initialized = true;
@@ -161,6 +165,10 @@ function triangleToLines(object) {
 //TODO: remove
 export function test() {
     var test_v = [0, 0, 500, 0, 0, 500];
+    var test_t = MatrixMath.translation(-60, -400);
+    var test_r = MatrixMath.rotation(Math.PI);
+    var m = MatrixMath.multiply(test_t, test_r);
+    gl.uniformMatrix3fv(matrixLoc, false, m);
     render(test_v, gl, vrtxPosBuffer);
     render(triangleToLines(test_v), gl, vrtxPosBuffer, true);
 }
