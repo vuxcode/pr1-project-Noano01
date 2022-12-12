@@ -23,7 +23,8 @@ var matrixLoc;
 var vrtxPosLoc;
 var vrtxPosBuffer;
 
-const vrtx_size = 2;
+//The amount of dimensions each vector has. DO NOT CHANGE.
+const vrtx_size = 3;
 
 var has_initialized = false;
 
@@ -36,7 +37,7 @@ export function hasFinished() {
  */
 export function clear() {
     gl.clearColor(0, 0, 0, 0);
-    gl.clear(gl.COLOR_BUFFER_BIT);
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 }
 
 /**
@@ -126,6 +127,7 @@ export function prepareRender() {
     clear();
 
     gl.enable(gl.CULL_FACE);
+    gl.enable(gl.DEPTH_TEST);
     gl.enableVertexAttribArray(vrtxPosLoc);
     gl.bindBuffer(gl.ARRAY_BUFFER, vrtxPosBuffer);
     gl.vertexAttribPointer(vrtxPosLoc, vrtx_size, gl.FLOAT, false, 0, 0);
@@ -175,7 +177,10 @@ function triangleToLines(object) {
     var out = [];
     var norms = [];
     for (var i = 0; i < object.length; i+=3*vrtx_size) {
-        var n = normal([object[i],object[i+1], 0], [object[i+2], object[i+3], 0], [object[i+4], object[i+5], 0]); //THIS IS 2D
+        var n = normal(
+            [object[i],object[i+1], object[i+2]],
+            [object[i+3], object[i+4], object[i+5]], 
+            [object[i+6], object[i+7], object[i+8]]);
         norms.push(n, n, n);
         for (var j = 0; j < 3; j++) {
             var k = j*vrtx_size;//The offset from the first part of the triangle
@@ -183,7 +188,10 @@ function triangleToLines(object) {
             out.push(object[ i + ( k    %max) ], 
                      object[ i + ((k+1) %max) ],
                      object[ i + ((k+2) %max) ],
-                     object[ i + ((k+3) %max) ]);
+                     object[ i + ((k+3) %max) ],
+                     object[ i + ((k+4) %max) ],
+                     object[ i + ((k+5) %max) ],
+                     );
         }
     }
     //Check for duplicates.
@@ -216,14 +224,15 @@ function triangleToLines(object) {
 //TODO: remove
 export function test() {
     var test_v = [
-        0, 0, 500, 0, 0, 500,
-        0, 500, 500, 0, 500, 500,
-        -50, -50, 0,-50,-50, 0,
-        -50,0, 0,-50, 0, 0,
+        0, 0, 0,        500, 0, 0,      0, 500, 0,
+        0, 0, 500,      0, 0, 0,        0, 500, 0,
+        500, 0, 0,      0, 0, 500,      0, 500, 0,
+        0, 0, 0,        0, 0, 500,      500, 0, 0,
     ];
-    var test_t = MatrixMath.translation(-60, -400);
-    var m = MatrixMath.rotate(test_t, 0);
-    gl.uniformMatrix3fv(matrixLoc, false, m);
+    var m = MatrixMath.projection(canvas.clientWidth, canvas.clientHeight, 1000);
+    m = MatrixMath.translate(m, 0, 0, -500);
+    m = MatrixMath.rotate(m, 0.1*Math.PI, 0.75*Math.PI, 0*Math.PI);
+    gl.uniformMatrix4fv(matrixLoc, false, m);
     render(test_v, gl, vrtxPosBuffer);
     render(triangleToLines(test_v), gl, vrtxPosBuffer, true);
 }
