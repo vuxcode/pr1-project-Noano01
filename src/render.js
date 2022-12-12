@@ -229,9 +229,9 @@ export function test() {
         500, 0, 0,      0, 0, 500,      0, 500, 0,
         0, 0, 0,        0, 0, 500,      500, 0, 0,
     ];
-    var m = MatrixMath.projection(canvas.clientWidth, canvas.clientHeight, 1000);
-    m = MatrixMath.translate(m, 0, 0, -500);
-    m = MatrixMath.rotate(m, 0.1*Math.PI, 0.75*Math.PI, 0*Math.PI);
+    var m = MatrixMath.perspective(70, canvas.clientWidth, canvas.clientHeight, 10000);
+    m = MatrixMath.translate(m, 0, 0, -2000);
+    m = MatrixMath.rotate(m, 0.1*Math.PI, -0.25*Math.PI, 0*Math.PI);
     gl.uniformMatrix4fv(matrixLoc, false, m);
     render(test_v, gl, vrtxPosBuffer);
     render(triangleToLines(test_v), gl, vrtxPosBuffer, true);

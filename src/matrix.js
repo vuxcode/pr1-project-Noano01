@@ -41,12 +41,28 @@ export function multiply(a,b) {
     return out;
 }
 
+//This is orthographic. You probably want perspective
 export function projection(width, height, depth) {
     return [
         1/width, 0, 0, 0,
         0, 1/height, 0, 0,
         0, 0, 1/depth, 0,
         0, 0, 0, 1,
+    ];
+}
+
+export function perspective(fov, width, height, far) {
+    var radFOV = (fov/180)*Math.PI;
+    var field = Math.tan(Math.PI * 0.5 - 0.5 * radFOV);
+    const near = 1;
+    var range = 1/(near-far);
+    var aspect = height/width;
+    
+    return [
+        field, 0, 0, 0,
+        0, field/aspect, 0, 0,
+        0, 0, (near+far)*range, -1,
+        0, 0, near*far*range*2, 0,
     ];
 }
 
