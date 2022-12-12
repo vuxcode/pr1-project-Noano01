@@ -16,8 +16,8 @@ const click_gl = click_canvas.getContext("webgl");
 //The shader program
 var program;
 
+//The location of various shader uniforms
 var colorLoc;
-var resolutionLoc;
 var matrixLoc;
 
 var vrtxPosLoc;
@@ -25,6 +25,8 @@ var vrtxPosBuffer;
 
 //The amount of dimensions each vector has. DO NOT CHANGE.
 const vrtx_size = 3;
+
+var projectionMatrix = MatrixMath.perspective(70, canvas.clientWidth, canvas.clientHeight, 10000);
 
 var has_initialized = false;
 
@@ -94,7 +96,6 @@ export function setupShaders() {
             program = createProgram(gl, v_shader, f_shader);
             //Get where to put the vertices and stuff
             colorLoc = gl.getUniformLocation(program, "u_color");
-            resolutionLoc = gl.getUniformLocation(program, "u_resolution");
             matrixLoc = gl.getUniformLocation(program, "u_matrix");
 
             vrtxPosLoc = gl.getAttribLocation(program, "a_position");
@@ -229,8 +230,7 @@ export function test() {
         500, 0, 0,      0, 0, 500,      0, 500, 0,
         0, 0, 0,        0, 0, 500,      500, 0, 0,
     ];
-    var m = MatrixMath.perspective(70, canvas.clientWidth, canvas.clientHeight, 10000);
-    m = MatrixMath.translate(m, 0, 0, -2000);
+    var m = MatrixMath.translate(projectionMatrix, 0, 0, -2000);
     m = MatrixMath.rotate(m, 0.1*Math.PI, -0.25*Math.PI, 0*Math.PI);
     gl.uniformMatrix4fv(matrixLoc, false, m);
     render(test_v, gl, vrtxPosBuffer);
