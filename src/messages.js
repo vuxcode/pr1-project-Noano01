@@ -10,12 +10,17 @@ const no_button = document.getElementById("message_no");
 const content = document.getElementById("message_content");
 const next = document.getElementById("message_next");
 
+const audio = [new Audio("/resources/sound.wav"), new Audio("/resources/sound.wav")];
+var audio_index = 0;
+
 //The time in miliseconds it takes to write one letter.
 const write_speed = 100;
 //The time in miliseconds it takes for the message box to appear.
 const start_speed = 1600
 //Whether the message screen is opened
 var opened = false;
+
+var blank = [" ", "\n", "\t"]
 
 /**
  * Opens the message screen.
@@ -60,6 +65,10 @@ function writeText(text, callback, index=0) {
     }
     //Add character at index to the text box.
     content.innerText = text.substring(0, index+1);
+    if (!blank.includes(text.charAt(index))) {
+        audio[audio_index].play();
+        audio_index = (audio_index + 1)%audio.length;
+    }
     //And then call this function again.
     setTimeout(writeText, write_speed, text, callback, index+1);
 }
