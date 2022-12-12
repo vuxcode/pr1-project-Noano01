@@ -49,6 +49,8 @@ body {
     border: 2px solid white;
     padding: 10px;
 
+    background-color: black;
+
     animation-name: message_box_animation;
     animation-duration: 1.5s;
     animation-timing-function: ease-out;
