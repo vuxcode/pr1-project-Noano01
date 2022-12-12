@@ -24,4 +24,6 @@
 
 - 2022-12-7 Worked for 1 hour 30 minutes.
 
-- 2022-12-11 Worked from 19:12 to ???
+- 2022-12-11 Worked ~10 hours.
+  - Still working on renderer.
+  - It can render 2d faces now, without any annoying diagonal lines.
