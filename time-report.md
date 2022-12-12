@@ -23,3 +23,5 @@
 - 2022-12-5 Worked for 1 hour 30 minutes.
 
 - 2022-12-7 Worked for 1 hour 30 minutes.
+
+- 2022-12-11 Worked from 19:12 to ???

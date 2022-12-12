@@ -34,12 +34,24 @@ export function multiply(a,b) {
     return out;
 }
 
+export function identity() {
+    return [
+        1,0,0,
+        0,1,0,
+        0,0,1,
+    ];
+}
+
 export function translation(x,y) {
     return [
         1, 0, 0,
         0, 1, 0,
         x, y, 1,
     ];
+}
+
+export function translate(m,x,y) {
+    return multiply(m, translation(x,y));
 }
 
 /**
@@ -54,4 +66,8 @@ export function rotation(z) {
         z_s, z_c, 0,
         0, 0, 1,
     ];
+}
+
+export function rotate(m,z) {
+    return multiply(m, rotation(z));
 }

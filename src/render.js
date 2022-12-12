@@ -125,6 +125,7 @@ export function prepareRender() {
     resizeScreen();
     clear();
 
+    gl.enable(gl.CULL_FACE);
     gl.enableVertexAttribArray(vrtxPosLoc);
     gl.bindBuffer(gl.ARRAY_BUFFER, vrtxPosBuffer);
     gl.vertexAttribPointer(vrtxPosLoc, vrtx_size, gl.FLOAT, false, 0, 0);
@@ -146,28 +147,82 @@ function render(object, context, buffer, wireframe = false) {
         gl.uniform4f(colorLoc,  1, 1, 1, 0); 
         context.drawArrays(context.LINES, 0, object.length/vrtx_size);
     } else {
-        gl.uniform4f(colorLoc,  0, 0, 0, 0); 
+        gl.uniform4f(colorLoc,  1, 0, 0, 0); 
         context.drawArrays(context.TRIANGLES, 0, object.length/vrtx_size);
     }
+}
+
+/**
+ * Takes three points in a triangle and returns their normal.
+ * The points should be counter clockwise.
+ */
+function normal(p1,p2,p3) {
+    var Ax = p2[0]-p1[0];
+    var Ay = p2[1]-p1[1];
+    var Az = p2[2]-p1[2];
+    var Bx = p3[0]-p1[0];
+    var By = p3[1]-p1[1];
+    var Bz = p3[2]-p1[2];
+    return [
+        Ay * Bz - Az * By,
+        Az * Bx - Ax * Bz,
+        Ax * By - Ay * Bx,
+    ];
 }
 
 //This should probably be in the part where objects are loaded, to increase performance
 function triangleToLines(object) {
     var out = [];
-    for (var i = 0; i < object.length; i+=3*vrtx_size) { //TODO: Update this when upgrading to 3D
-        out.push(object[i], object[i+1], object[i+2], object[i+3]);
-        out.push(object[i+2], object[i+3], object[i+4], object[i+5]);
-        out.push(object[i+4], object[i+5], object[i], object[i+1]);
+    var norms = [];
+    for (var i = 0; i < object.length; i+=3*vrtx_size) {
+        var n = normal([object[i],object[i+1], 0], [object[i+2], object[i+3], 0], [object[i+4], object[i+5], 0]); //THIS IS 2D
+        norms.push(n, n, n);
+        for (var j = 0; j < 3; j++) {
+            var k = j*vrtx_size;//The offset from the first part of the triangle
+            var max = vrtx_size*3;
+            out.push(object[ i + ( k    %max) ], 
+                     object[ i + ((k+1) %max) ],
+                     object[ i + ((k+2) %max) ],
+                     object[ i + ((k+3) %max) ]);
+        }
+    }
+    //Check for duplicates.
+    var loop_step = 2*vrtx_size
+    for (var i = 0; i < out.length; i+=loop_step) {
+        check_dup: for (var j = i+loop_step; j < out.length; j+= loop_step) {
+            for (var k = 0; k < vrtx_size; k++) {
+                if (out[i+k] != out[j+vrtx_size+k] || out[j+k] != out[i+vrtx_size+k]) {
+                    continue check_dup;
+                }
+            }
+            //Found overlap
+            var i2 = (i/loop_step);
+            var j2 = (j/loop_step);
+            var n1 = norms[i2];
+            var n2 = norms[j2];
+            if (n1[0] != n2[0] || n1[1] != n2[1] || n1[2] != n2[2]) {
+                continue check_dup;
+            }
+            //Overlap is duplicate!
+            out.splice(j,2*vrtx_size);
+            out.splice(i,2*vrtx_size);
+            norms.splice(j2,1);
+            norms.splice(i2, 1);
+        }
     }
     return out;
 }
 
 //TODO: remove
 export function test() {
-    var test_v = [0, 0, 500, 0, 0, 500];
+    var test_v = [
+        0, 0, 500, 0, 0, 500,
+        0, 500, 500, 0, 500, 500,
+        -50, -50, 0,-50,-50, 0,
+        -50,0, 0,-50, 0, 0,
+    ];
     var test_t = MatrixMath.translation(-60, -400);
-    var test_r = MatrixMath.rotation(Math.PI);
-    var m = MatrixMath.multiply(test_t, test_r);
+    var m = MatrixMath.rotate(test_t, 0);
     gl.uniformMatrix3fv(matrixLoc, false, m);
     render(test_v, gl, vrtxPosBuffer);
     render(triangleToLines(test_v), gl, vrtxPosBuffer, true);
