@@ -136,6 +136,16 @@ body {
     display: none
 }
 
+@keyframes module_message_appear {
+    0% {
+        opacity:  0;
+    }
+
+    100% {
+        opacity:  1;
+    }
+}
+
 #module_message {
     background-color: black;
     position: absolute;
@@ -144,6 +154,14 @@ body {
     right: 0;
     left: 0;
     padding: 50px;
+
+    animation-name: message_box_animation;
+    animation-duration: 1.5s;
+}
+
+#module_message h1 {
+    animation-name: module_message_appear;
+    animation-duration: 0.5s;
 }
 
 #click_canvas {
