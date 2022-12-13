@@ -148,7 +148,7 @@ function render(object, context, buffer, wireframe = false) {
         gl.uniform4f(colorLoc,  1, 1, 1, 0); 
         context.drawArrays(context.LINES, 0, object.length/vrtx_size);
     } else {
-        gl.uniform4f(colorLoc,  1, 0, 0, 0); 
+        gl.uniform4f(colorLoc,  0, 0, 0, 0); 
         context.drawArrays(context.TRIANGLES, 0, object.length/vrtx_size);
     }
 }
@@ -223,13 +223,26 @@ function triangleToLines(object) {
 //TODO: remove
 export function test() {
     var test_v = [
-        0, 0, 0,        500, 0, 0,      0, 500, 0,
-        0, 0, 500,      0, 0, 0,        0, 500, 0,
-        500, 0, 0,      0, 0, 500,      0, 500, 0,
-        0, 0, 0,        0, 0, 500,      500, 0, 0,
+        0, 0, 1,    1, 0, 1,    0, 1, 1,//Front -z
+        1, 0, 1,    1, 1, 1,    0, 1, 1,
+
+        0, 0, 0,    0, 0, 1,    0, 1, 0,//+x
+        0, 0, 1,    0, 1, 1,    0, 1, 0,
+
+        1, 0, 0,    0, 0, 0,    1, 1, 0,//Back +z
+        0, 0, 0,    0, 1, 0,    1, 1, 0,
+
+        1, 0, 1,    1, 0, 0,    1, 1, 1,//-x
+        1, 0, 0,    1, 1, 0,    1, 1, 1,
+
+        0, 1, 0,    0, 1, 1,    1, 1, 0,//Top
+        1, 1, 0,    0, 1, 1,    1, 1, 1,
+
+        0, 0, 0,    1, 0, 0,    0, 0, 1,//Bottom
+        1, 0, 0,    1, 0, 1,    0, 0, 1,
     ];
-    var m = MatrixMath.translate(projectionMatrix, 0, 0, -2000);
-    m = MatrixMath.rotate(m, 0.1*Math.PI, -0.25*Math.PI, 0*Math.PI);
+    var m = MatrixMath.translate(projectionMatrix, 0, 0, -5);
+    m = MatrixMath.rotate(m, 0.1*Math.PI, 0.25*Math.PI, 0*Math.PI);
     gl.uniformMatrix4fv(matrixLoc, false, m);
     render(test_v, gl, vrtxPosBuffer);
     render(triangleToLines(test_v), gl, vrtxPosBuffer, true);
