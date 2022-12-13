@@ -10,7 +10,7 @@ const no_button = document.getElementById("message_no");
 const content = document.getElementById("message_content");
 const next = document.getElementById("message_next");
 
-const audio = [new Audio("/resources/sound.wav"), new Audio("/resources/sound.wav")];
+const audio = [new Audio("resources/sound.wav"), new Audio("resources/sound.wav")];
 var audio_index = 0;
 
 //The time in miliseconds it takes to write one letter.
