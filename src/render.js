@@ -27,6 +27,7 @@ var vrtxPosBuffer;
 const vrtx_size = 3;
 
 var projectionMatrix = MatrixMath.perspective(70, canvas.clientWidth, canvas.clientHeight, 10000);
+var cameraMatrix = MatrixMath.identity();
 
 var has_initialized = false;
 
@@ -220,6 +221,17 @@ function triangleToLines(object) {
     return out;
 }
 
+function degToRad(r) {
+    return (r/180)*Math.PI;
+}
+
+export function setCamera(x,y,z,rx,ry,rz) {
+    var m = MatrixMath.identity();
+    m = MatrixMath.rotate(m, degToRad(-rx), degToRad(-ry), degToRad(-rz));
+    m = MatrixMath.translate(m, -x, -y, -z);
+    cameraMatrix = m;
+}
+
 //TODO: remove
 export function test() {
     var test_v = [
@@ -241,8 +253,10 @@ export function test() {
         0, 0, 0,    1, 0, 0,    0, 0, 1,//Bottom
         1, 0, 0,    1, 0, 1,    0, 0, 1,
     ];
-    var m = MatrixMath.translate(projectionMatrix, 0, 0, -5);
-    m = MatrixMath.rotate(m, 0.1*Math.PI, 0.25*Math.PI, 0*Math.PI);
+    setCamera(2, 2, 4, -10, 10, 0);
+    var m = MatrixMath.multiply(projectionMatrix, cameraMatrix);
+    m = MatrixMath.translate(m, 0, 0, 0);
+    m = MatrixMath.rotate(m, 0*Math.PI, 0.*Math.PI, 0*Math.PI);
     gl.uniformMatrix4fv(matrixLoc, false, m);
     render(test_v, gl, vrtxPosBuffer);
     render(triangleToLines(test_v), gl, vrtxPosBuffer, true);

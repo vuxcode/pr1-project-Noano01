@@ -41,6 +41,15 @@ export function multiply(a,b) {
     return out;
 }
 
+export function identity() {
+    return [
+        1, 0, 0, 0,
+        0, 1, 0, 0,
+        0, 0, 1, 0,
+        0, 0, 0, 1,
+    ];
+}
+
 //This is orthographic. You probably want perspective
 export function projection(width, height, depth) {
     return [
