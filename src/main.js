@@ -6,7 +6,6 @@
 document.getElementById("module_message").remove();
 
 import * as Renderer from "./render.js";
-import * as EventHandler from "./events.js";
 import * as ItemHandler from "./items.js";
 import * as MessageHandler from "./messages.js";
 
