@@ -113,8 +113,6 @@ export function resizeScreen() {
     canvas.width = canvas.clientWidth;
     canvas.height = canvas.clientHeight;
 
-    gl.uniform2f(resolutionLoc, canvas.clientWidth, canvas.clientHeight);
-
     click_canvas.width = canvas.clientWidth;
     click_canvas.height = canvas.clientHeight;
 
