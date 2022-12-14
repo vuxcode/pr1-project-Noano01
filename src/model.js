@@ -42,7 +42,6 @@ export function load(name, callback) {
  * The points should be counter clockwise.
  */
 function normal(p1,p2,p3) {
-    console.log(p1,p2,p3);
     var Ax = p2[0]-p1[0];
     var Ay = p2[1]-p1[1];
     var Az = p2[2]-p1[2];
@@ -58,8 +57,6 @@ function normal(p1,p2,p3) {
     out[0] = out[0]/mag;
     out[1] = out[1]/mag;
     out[2] = out[2]/mag;
-    console.log(mag);
-    console.log(out);
     return out;
 }
 
@@ -139,7 +136,6 @@ export function triangleToLines(object) {
     for (var i = 0; i < duplicates.length; i++) {
         out.splice(duplicates[i],2*vrtx_size)
     }
-    console.log(duplicates);
     return out;
 }
 
