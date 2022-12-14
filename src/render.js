@@ -35,7 +35,7 @@ var click_vrtxPosBuffer;
 //The amount of dimensions each vector has. DO NOT CHANGE.
 const vrtx_size = 3;
 
-var projectionMatrix = MatrixMath.perspective(70, canvas.clientWidth, canvas.clientHeight, 10000);
+var projectionMatrix = MatrixMath.perspective(110, canvas.clientWidth, canvas.clientHeight, 10000);
 var cameraMatrix = MatrixMath.identity();
 
 var has_initialized = false;
