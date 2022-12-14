@@ -10,6 +10,8 @@ const no_button = document.getElementById("message_no");
 const content = document.getElementById("message_content");
 const next = document.getElementById("message_next");
 
+const turn_buttons = document.getElementById("turn_buttons");
+
 const audio = [new Audio("resources/sound.wav"), new Audio("resources/sound.wav")];
 var audio_index = 0;
 
@@ -33,6 +35,7 @@ var blank = [" ", "\n", "\t"]
     clearMessage();
     //Display messaging screen.
     screen.style.display = "block";
+    turn_buttons.style.display = "none";
 }
 
 /**
@@ -42,6 +45,7 @@ export function exit() {
     opened = false;
     //Hide messaging screen.
     screen.style.display = "none";
+    turn_buttons.style.display = "flex";
 }
 
 
