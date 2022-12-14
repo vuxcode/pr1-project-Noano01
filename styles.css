@@ -179,11 +179,24 @@ body {
     justify-content: space-between;
 }
 
+@keyframes turn_button_appear {
+    0% {
+        opacity:  0;
+    }
+
+    100% {
+        opacity:  1;
+    }
+}
+
 #turn_buttons span {
     height: 100%;
     font-size: 100px;
     padding:20px;
     user-select: none;
+
+    animation-name: turn_button_appear;
+    animation-duration: 0.5s;
 }
 
 #turn_buttons span:hover {
