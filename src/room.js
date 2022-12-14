@@ -259,7 +259,7 @@ const rooms = [
         ],
         [//A tidy bookcase
         ["state", "has_key", false],
-        ModelHandler.getModel("messy_books"),
+        ModelHandler.getModel("books"),
         [0.9, 0, -1.5, 0, 0, 0, 0.5, 0.5, 0.25,],
         () => {
             MessageHandler.showMessage("A rather nicely arranged bookshelf.")
