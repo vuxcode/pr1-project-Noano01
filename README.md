@@ -12,7 +12,17 @@ The final program is not the goal! The aim of the project is to show how you hav
 
 # Project Summary
 
-> Before the final submission date you should include a "PROJECT SUMMARY" in this section here. 
+> This is a simple puzzle game, where you try to find keys to escape rooms.
+> It is really short and really simple.
+
+> If I were to use one word to describe this experience, it would be "hectic".
+> I more or less saved the biggest and most difficult parts until the last week, which became a bit stressful.
+> But other than that it was fun.
+
+>There are lots of things I wish I had time to implement, such as a map of the level, some file format for rooms so you don't need >to hardcode them, an actual inventory, more complicated camera angles, some actual puzzles, amongst other things.
+
+> I did suprisingly manage to stick pretty close to the budget, but that is mainly because I had to scale down most of the features.
+> Adding all the features I wanted would have taken at least 10 more hours.
 
 # User Guide
 

@@ -1,5 +1,5 @@
 # Bug List
 
-> Make a list of the things that don't work as expected. Keep a list of things that you have fixed and try to document how you solved them.
+1. Problem: The hitbox for the models are weird.
 
-1. Problem: *Describe your problem here* 
+2. Most of the models are wonky. Especially their scale.
