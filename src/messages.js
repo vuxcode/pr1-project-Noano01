@@ -153,5 +153,5 @@ function clearMessage() {
     //Hide next arrow
     next.style.display = "none";
     //Hide buttons
-    //buttons.style.display = "none";
+    buttons.style.display = "none";
 }
