@@ -53,7 +53,7 @@ export function hasFinished() {
  * Clear everything from the screen.
  */
 export function clear() {
-    gl.clearColor(0, 0, 0, 0);
+    gl.clearColor(0, 0, 0, 1);
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
     click_gl.clearColor(0, 0, 0, 0);
@@ -192,7 +192,7 @@ function render(object, context, buffer, wireframe = false, click = false) {
         context.drawArrays(context.LINES, 0, object.length/vrtx_size);
     } else {
         if (!click) {
-            context.uniform4f(colorLoc,  0, 0, 0, 0); 
+            context.uniform4f(colorLoc,  0, 0, 0, 1); 
         };
         context.drawArrays(context.TRIANGLES, 0, object.length/vrtx_size);
     }
