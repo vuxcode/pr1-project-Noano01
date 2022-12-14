@@ -63,7 +63,7 @@ export function projection(width, height, depth) {
 export function perspective(fov, width, height, far) {
     var radFOV = (fov/180)*Math.PI;
     var field = Math.tan(Math.PI * 0.5 - 0.5 * radFOV);
-    const near = 1;
+    const near = 0.01;
     var range = 1/(near-far);
     var aspect = height/width;
     

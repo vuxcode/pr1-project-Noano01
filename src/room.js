@@ -101,11 +101,11 @@ export function move(id) {
  */
 export function turn(dir = true) {
     if (dir) {
-        view += 90
+        view -= 90
     } else {
-        view -= 90;
+        view += 90;
     }
-    RenderHandler.setCamera(0,1.5,0,0,view,0);
+    RenderHandler.setCamera(0,1,0,0,view,0);
 }
 RenderHandler.setCamera(0,1,0,0,0,0);
 
