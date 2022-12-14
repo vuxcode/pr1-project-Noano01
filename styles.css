@@ -1,5 +1,5 @@
 body {
-    overflow: hidden
+    overflow: hidden;
 }
 
 #canvas {
@@ -162,5 +162,6 @@ body {
 }
 
 #click_canvas {
-    visibility: hidden;
+    width: 100%;
+    height: 100%;
 }
