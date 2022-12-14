@@ -65,7 +65,7 @@ const rooms = [
             [0, 0.25, -1.4, -45, 0, 0, 0.25, 0.25, 0.25,],
             false
             ],
-            [//An key!
+            [//A key!
             ["and", ["state", "chest_opened", false], ["state", "key_exist", true]],
             ModelHandler.getModel("key"),
             [0, 0.3, -1.3, 45, -90, 0, 0.3, 0.3, 0.3,],
@@ -75,8 +75,198 @@ const rooms = [
                 MessageHandler.showMessage("You found a key!");
             }
             ],
+            [//The door frame
+            ["boolean", true],
+            ModelHandler.getModel("door_frame"),
+            [0, -0.1, 1.5, 0, 180, 0, 0.4, 0.4, 0.25,],
+            false
+            ],
+            [//Decorative door
+            ["state", "door_open", false],
+            ModelHandler.getModel("door"),
+            [0, -0.1, 1.7, 0, 180, 0, 0.4, 0.4, 0.25,],
+            false,
+            ],
+            [//The door
+            ["inverted", "door_open", true],
+            ModelHandler.getModel("door"),
+            [0, -0.1, 1.4, 0, 180, 0, 0.4, 0.4, 0.25,],
+            ()=> {
+                MessageHandler.showMessage("A locked wooden door.", () => {
+                    if (StateHandler.getOrSet("has_key", false)) {
+                        MessageHandler.askBool("Use the key you found to open it?", (answer) => {
+                            if (answer) {
+                                StateHandler.set("door_open", true)
+                                MessageHandler.showMessage("You step through the door...")
+                                StateHandler.clear();
+                                move(1);
+                            } else {
+                                MessageHandler.exit();
+                            }
+                        });
+                    } else {
+                        MessageHandler.exit();
+                    }
+                });
+            }
+            ],
         ]
     ],
+    [//The second room
+        [//The walls
+            [//The only wall in this room
+            ModelHandler.getModel("cube"),
+            [0, 1, 0, 0, 0, 0, 3, 2, 3]
+        ],
+    ],
+    [//The objects in the room
+        
+        [//The door frame
+        ["boolean", true],
+        ModelHandler.getModel("door_frame"),
+        [0, -0.1, 1.5, 0, 180, 0, 0.4, 0.4, 0.25,],
+        false
+        ],
+        [//Decorative door
+        ["state", "door_open", false],
+        ModelHandler.getModel("door"),
+        [0, -0.1, 1.7, 0, 180, 0, 0.4, 0.4, 0.25,],
+        false,
+        ],
+        [//The door
+        ["inverted", "door_open", true],
+        ModelHandler.getModel("door"),
+        [0, -0.1, 1.4, 0, 180, 0, 0.4, 0.4, 0.25,],
+        ()=> {
+            MessageHandler.showMessage("A locked wooden door.", () => {
+                if (StateHandler.getOrSet("has_key", false)) {
+                    MessageHandler.askBool("Use the key you found to open it?", (answer) => {
+                        if (answer) {
+                            StateHandler.set("door_open", true);
+                            MessageHandler.showMessage("You step through the door...")
+                            StateHandler.clear();
+                            move(2);
+                        } else {
+                            MessageHandler.exit();
+                        }
+                    });
+                } else {
+                    MessageHandler.exit();
+                }
+            });
+        }
+        ],
+        [//A flowerpot
+        ["boolean", true],
+        ModelHandler.getModel("plant"),
+        [1, 0, -1.4, 0, 0, 0, 0.25, 0.25, 0.25,],
+        () => {
+            if (StateHandler.getOrSet("has_key", false)) {
+                MessageHandler.showMessages(["A pot with some kind of plant.", "You previously found a key here."]);
+            } else {
+                StateHandler.set("has_key", true); 
+                MessageHandler.showMessages(["You spot a plant in the corner.",
+                "The plant seems pretty irrelevant.",
+                "But wait! There is something glinting in the dirt!",
+                "You found a key!"]);
+            }
+        }
+        ],
+        [//A bookcase
+        ["boolean", true],
+        ModelHandler.getModel("books"),
+        [-0.9, 0, -1.5, 0, 0, 0, 0.5, 0.5, 0.25,],
+        () => {
+            MessageHandler.showMessage("You rifle through the bookcase, but find nothing of interest.");
+        }
+        ],
+    ]
+    ],
+    [//The third room
+        [//The walls
+            [//The only wall in this room
+            ModelHandler.getModel("cube"),
+            [0, 1, 0, 0, 0, 0, 3, 2, 3]
+        ],
+    ],
+    [//The objects in the room
+        [//The door frame
+        ["boolean", true],
+        ModelHandler.getModel("door_frame"),
+        [0, -0.1, 1.5, 0, 180, 0, 0.4, 0.4, 0.25,],
+        false
+        ],
+        [//Decorative door
+        ["state", "door_open", false],
+        ModelHandler.getModel("door"),
+        [0, -0.1, 1.7, 0, 180, 0, 0.4, 0.4, 0.25,],
+        false,
+        ],
+        [//The door
+        ["inverted", "door_open", true],
+        ModelHandler.getModel("door"),
+        [0, -0.1, 1.4, 0, 180, 0, 0.4, 0.4, 0.25,],
+        ()=> {
+            MessageHandler.showMessage("A locked wooden door.", () => {
+                if (StateHandler.getOrSet("has_key", false)) {
+                    MessageHandler.askBool("Use the key you found to open it?", (answer) => {
+                        if (answer) {
+                            StateHandler.set("door_open", true);
+                            MessageHandler.showMessages(["You step through the door...", "Congrats! You beat the game."], () => {
+                                MessageHandler.askBool("Play again?", (answer2) => {
+                                    if (answer2) {
+                                        MessageHandler.exit();
+                                        move(0);
+                                    } else {
+                                        document.body.remove();
+                                    }
+                                });
+                            })
+                            StateHandler.clear();
+                        } else {
+                            MessageHandler.exit();
+                        }
+                    });
+                } else {
+                    MessageHandler.exit();
+                }
+            });
+        }
+        ],
+        [//A flowerpot
+        ["boolean", true],
+        ModelHandler.getModel("plant"),
+        [-1, 0, -1.4, 0, 90, 0, 0.25, 0.25, 0.25,],
+        () => {
+            MessageHandler.showMessages(["There is a pot in the corner, containing what looks to be some kind of plant.",
+                                        "It doesn't look useful."]);
+        }
+        ],
+        [//A messy bookcase
+        ["inverted", "has_key", true],
+        ModelHandler.getModel("messy_books"),
+        [0.9, 0, -1.5, 0, 0, 0, 0.5, 0.5, 0.25,],
+        () => {
+            MessageHandler.showMessages(["A bookcase full of haphazardly placed books.",
+                                        "You try to arrange the books a bit more neatly.",
+                                        "But wait... What is this?",
+                                        "You found a key!"
+            ], () => {
+                StateHandler.set("has_key", true)
+                MessageHandler.exit();
+            });
+        }
+        ],
+        [//A tidy bookcase
+        ["state", "has_key", false],
+        ModelHandler.getModel("messy_books"),
+        [0.9, 0, -1.5, 0, 0, 0, 0.5, 0.5, 0.25,],
+        () => {
+            MessageHandler.showMessage("A rather nicely arranged bookshelf.")
+        }
+        ],
+    ]
+],
 ];
 
 
@@ -93,6 +283,7 @@ var view = 0;
 export function move(id) {
     player = id;
     view = 0;
+    RenderHandler.setCamera(0,1,0,0,0,0);
 }
 
 /**
@@ -105,6 +296,7 @@ export function turn(dir = true) {
     } else {
         view += 90;
     }
+    view = view%360;
     RenderHandler.setCamera(0,1,0,0,view,0);
 }
 RenderHandler.setCamera(0,1,0,0,0,0);
