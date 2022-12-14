@@ -66,6 +66,7 @@ body {
     word-break: break-word;
     overflow: hidden;
     line-height: 117%;
+    user-select: none;
 }
 
 #message_next {
@@ -106,6 +107,7 @@ body {
     font-size: 40px;
     text-align: center;
     line-height: 35px;
+    user-select: none;
 }
 
 @keyframes arrow_spin {
@@ -159,9 +161,31 @@ body {
 #module_message h1 {
     animation-name: module_message_appear;
     animation-duration: 0.5s;
+    user-select: none;
 }
 
 #click_canvas {
     width: 100%;
     height: 100%;
+}
+
+#turn_buttons {
+    width: 100%;
+    height: 20%;
+    position: absolute;
+    top: 40%;
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#turn_buttons span {
+    height: 100%;
+    font-size: 100px;
+    padding:20px;
+    user-select: none;
+}
+
+#turn_buttons span:hover {
+    font-size: 110px;
 }
