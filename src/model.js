@@ -42,6 +42,7 @@ export function load(name, callback) {
  * The points should be counter clockwise.
  */
 function normal(p1,p2,p3) {
+    console.log(p1,p2,p3);
     var Ax = p2[0]-p1[0];
     var Ay = p2[1]-p1[1];
     var Az = p2[2]-p1[2];
@@ -57,9 +58,18 @@ function normal(p1,p2,p3) {
     out[0] = out[0]/mag;
     out[1] = out[1]/mag;
     out[2] = out[2]/mag;
+    console.log(mag);
+    console.log(out);
     return out;
 }
 
+function isClose(a,b) {
+    var dif = Math.abs(a-b);
+    if (dif <= 0.001) {
+        return true;
+    }
+    return false;
+}
 
 /**
  * Takes a bunch of triangular faces and returns the lines outlining them.
@@ -103,7 +113,7 @@ export function triangleToLines(object) {
             //Found overlap
             var j2 = (j/loop_step);
             var n2 = norms[j2];
-            if (n1[0] != n2[0] || n1[1] != n2[1] || n1[2] != n2[2]) {
+            if (!isClose(n1[0], n2[0]) || !isClose(n1[1], n2[1]) || !isClose(n1[2], n2[2])) {
                 continue check_dup;
             }
             //Overlap is duplicate!
@@ -129,6 +139,7 @@ export function triangleToLines(object) {
     for (var i = 0; i < duplicates.length; i++) {
         out.splice(duplicates[i],2*vrtx_size)
     }
+    console.log(duplicates);
     return out;
 }
 
