@@ -6,8 +6,8 @@
 document.getElementById("module_message").remove();
 
 import * as Renderer from "./render.js";
-import * as ItemHandler from "./items.js";
 import * as MessageHandler from "./messages.js";
+import * as RoomHandler from "./room.js";
 
 //This keeps track of the current time so the main loop knows how much time has passed.
 var loop_time = Date.now();
@@ -24,7 +24,8 @@ function main() {
 
     if (Renderer.hasFinished()) {
         Renderer.prepareRender();
-        Renderer.test();
+        //Renderer.test();
+        RoomHandler.renderRoom();
     }
     
     //TODO: the rest of the game.

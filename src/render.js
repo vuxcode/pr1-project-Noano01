@@ -211,38 +211,6 @@ export function setCamera(x,y,z,rx,ry,rz) {
     cameraMatrix = m;
 }
 
-//Test model.
-//TODO: REMOVE.
-var wall_model;
-var wall_lines;
-ModelHandler.load("cube", (model) => {
-    wall_model = model;
-    wall_lines = ModelHandler.triangleToLines(model);
-});
-var chest_model;
-var chest_lines;
-ModelHandler.load("books", (model) => {
-    chest_model = model;
-    chest_lines = ModelHandler.triangleToLines(model);
-});
-var lid_model;
-var lid_lines;
-ModelHandler.load("plant", (model) => {
-    lid_model = model;
-    lid_lines = ModelHandler.triangleToLines(model);
-});
-
-//TODO: remove
-export function test() {
-    setCamera(2, 2, 6, -30, 10, 0);
-    draw([wall_model,wall_lines], [0,5,0,0,0,0,20,10,20], false, false);
-    draw([chest_model,chest_lines], [0,0,0,0,0,0,1,1,1], () => {
-        console.log("HELLO");
-    });
-    draw([lid_model,lid_lines], [2,0,0,0,0,0,.5,0.5,0.5], () => {
-        console.log("WORLD");
-    });
-}
 
 function intToColor(num) {
     var num = num*16;
