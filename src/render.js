@@ -150,7 +150,7 @@ function render(object, context, buffer, wireframe = false) {
         gl.uniform4f(colorLoc,  1, 1, 1, 0); 
         context.drawArrays(context.LINES, 0, object.length/vrtx_size);
     } else {
-        gl.uniform4f(colorLoc,  0, 0, 0, 0); 
+        gl.uniform4f(colorLoc,  1, 0, 0, 0); 
         context.drawArrays(context.TRIANGLES, 0, object.length/vrtx_size);
     }
 }
@@ -167,6 +167,15 @@ export function setCamera(x,y,z,rx,ry,rz) {
     m = MatrixMath.translate(m, -x, -y, -z);
     cameraMatrix = m;
 }
+
+//Test model.
+//TODO: REMOVE.
+var chest_model;
+var chest_lines;
+ModelHandler.load("lid", (model) => {
+    chest_model = model;
+    chest_lines = ModelHandler.triangleToLines(model);
+});
 
 //TODO: remove
 export function test() {
@@ -189,13 +198,15 @@ export function test() {
         0, 0, 0,    1, 0, 0,    0, 0, 1,//Bottom
         1, 0, 0,    1, 0, 1,    0, 0, 1,
     ];
-    setCamera(2, 2, 4, -10, 10, 0);
+    
+    setCamera(0, -10, 6, 45, 0, 0);
     var m = MatrixMath.multiply(projectionMatrix, cameraMatrix);
     m = MatrixMath.translate(m, 0, 0, 0);
     m = MatrixMath.rotate(m, 0*Math.PI, 0.*Math.PI, 0*Math.PI);
     gl.uniformMatrix4fv(matrixLoc, false, m);
-    render(test_v, gl, vrtxPosBuffer);
-    render(ModelHandler.triangleToLines(test_v), gl, vrtxPosBuffer, true);
+    render(chest_model, gl, vrtxPosBuffer);
+    //var test_lines = ModelHandler.triangleToLines(test_v);
+    render(chest_lines, gl, vrtxPosBuffer, true);
 }
 
 
