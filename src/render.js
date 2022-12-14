@@ -4,7 +4,6 @@
 
 import * as ResourceHandler from "./resources.js";
 import * as MatrixMath from "./matrix.js";
-import * as ModelHandler from "./model.js";
 
 //The canvas where everything is rendered.
 const canvas = document.getElementById("canvas");
