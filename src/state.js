@@ -18,7 +18,7 @@ export function set(key, value) {
 }
 
 export function getOrSet(key, value) {
-    if (data[key]) {
+    if (data[key] != null) {
         return data[key];
     }
     return set(key, value);
