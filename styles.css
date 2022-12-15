@@ -177,6 +177,7 @@ body {
     display:flex;
     flex-direction: row;
     justify-content: space-between;
+    pointer-events: none;
 }
 
 @keyframes turn_button_appear {
@@ -194,6 +195,7 @@ body {
     font-size: 100px;
     padding:20px;
     user-select: none;
+    pointer-events: visible;
 
     animation-name: turn_button_appear;
     animation-duration: 0.5s;
